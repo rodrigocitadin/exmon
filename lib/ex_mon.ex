@@ -16,11 +16,11 @@ defmodule ExMon do
   end
 
   def make_move(move) do
-    move
-    |> Actions.verify_move()
-    |> do_move()
+    case move do
+      :heal -> Actions.heal()
+      :kick -> Actions.kick()
+      :punch -> Actions.punch()
+      move -> Status.print_wrong_move(move)
+    end
   end
-
-  defp do_move({:error, move}), do: Status.print_wrong_move(move)
-  defp do_move(_any), do: raise("not implemented yet")
 end
