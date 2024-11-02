@@ -1,18 +1,13 @@
 defmodule ExMon do
-  @moduledoc """
-  Documentation for `ExMon`.
-  """
+  alias ExMon.{Player, Game}
 
-  @doc """
-  Hello world.
+  @computer_name "machine"
 
-  ## Examples
+  defdelegate create_player(name), to: Player, as: :build
 
-      iex> ExMon.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def start_game(player) do
+    @computer_name
+    |> create_player()
+    |> Game.start(player)
   end
 end
