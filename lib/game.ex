@@ -17,4 +17,6 @@ defmodule ExMon.Game do
 
   def player, do: Map.get(info(), :player)
   def computer, do: Map.get(info(), :player)
+  def round, do: Map.get(info(), :round)
+  def turn, do: Map.get(info(), :turn)
 end

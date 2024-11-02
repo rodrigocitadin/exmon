@@ -17,9 +17,9 @@ defmodule ExMon do
 
   def make_move(move) do
     case move do
-      :heal -> Actions.heal()
-      :kick -> Actions.kick()
-      :punch -> Actions.punch()
+      :heal -> Actions.move(:heal)
+      :kick -> Actions.move(:kick)
+      :punch -> Actions.move(:punch)
       move -> Status.print_wrong_move(move)
     end
   end
