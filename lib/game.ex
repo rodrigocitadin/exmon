@@ -15,8 +15,15 @@ defmodule ExMon.Game do
 
   def info, do: Agent.get(__MODULE__, & &1)
 
-  def player, do: Map.get(info(), :player)
-  def computer, do: Map.get(info(), :player)
+  def fetch_player(:player), do: Map.get(info(), :player)
+  def fetch_player(:computer), do: Map.get(info(), :computer)
   def round, do: Map.get(info(), :round)
   def turn, do: Map.get(info(), :turn)
+
+  def reverse_turn do
+    case turn() do
+      :player -> :computer
+      :computer -> :player
+    end
+  end
 end

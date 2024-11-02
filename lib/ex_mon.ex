@@ -15,12 +15,8 @@ defmodule ExMon do
     Status.print_game_started()
   end
 
-  def make_move(move) do
-    case move do
-      :heal -> Actions.move(:heal)
-      :kick -> Actions.move(:kick)
-      :punch -> Actions.move(:punch)
-      move -> Status.print_wrong_move(move)
-    end
-  end
+  def make_move(:heal), do: Actions.move(:heal)
+  def make_move(:kick), do: Actions.move(:kick)
+  def make_move(:punch), do: Actions.move(:punch)
+  def make_move(move), do: Status.print_wrong_move(move)
 end
