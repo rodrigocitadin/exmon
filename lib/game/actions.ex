@@ -13,16 +13,15 @@ defmodule ExMon.Game.Actions do
     |> Enum.random()
     |> fetch_player_to_update()
     |> calculate_new_life()
-  end
-
-  defp fetch_player_to_update(pw) when pw > 0 do
-    player = Game.turn() |> Game.fetch_player()
-
-    {player, pw}
+    |> update_game_state
   end
 
   defp fetch_player_to_update(pw) do
-    player = Game.reverse_turn() |> Game.fetch_player()
+    player =
+      case pw do
+        _ when pw > 0 -> Game.turn() |> Game.fetch_player()
+        _ -> Game.reverse_turn() |> Game.fetch_player()
+      end
 
     {player, pw}
   end
@@ -35,5 +34,14 @@ defmodule ExMon.Game.Actions do
       _ when new_life >= 100 -> Map.put(player, :life, 100)
       new_life -> Map.put(player, :life, new_life)
     end
+  end
+
+  defp update_game_state(player) do
+    player_to_change =
+      if Map.get(player, :name) === "machine", do: :computer, else: :player
+
+    Game.info()
+    |> Map.put(player_to_change, player)
+    |> Game.update()
   end
 end
