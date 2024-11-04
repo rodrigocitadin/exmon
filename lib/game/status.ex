@@ -10,4 +10,10 @@ defmodule ExMon.Game.Status do
   def print_wrong_move(move) do
     IO.puts("\n------- Invalid move \"#{move}\" -------\n")
   end
+
+  def print_move(player_affected, move) do
+    IO.puts("\n------- #{player_affected} took a #{move} -------\n")
+    IO.inspect(Game.info())
+    IO.puts("\n------------------------------------\n")
+  end
 end

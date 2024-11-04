@@ -1,4 +1,5 @@
 defmodule ExMon.Game.Actions do
+  alias ExMon.Game.Status
   alias ExMon.Game
 
   @punch_pw -15..-15
@@ -13,7 +14,7 @@ defmodule ExMon.Game.Actions do
     |> Enum.random()
     |> fetch_player_to_update()
     |> calculate_new_life()
-    |> update_game_state
+    |> update_game_state(move)
   end
 
   defp fetch_player_to_update(pw) do
@@ -36,12 +37,14 @@ defmodule ExMon.Game.Actions do
     end
   end
 
-  defp update_game_state(player) do
+  defp update_game_state(player, move) do
     player_to_change =
       if Map.get(player, :name) === "machine", do: :computer, else: :player
 
     Game.info()
     |> Map.put(player_to_change, player)
     |> Game.update()
+
+    Status.print_move(player_to_change, move)
   end
 end
