@@ -17,9 +17,9 @@ defmodule ExMon do
   end
 
   def do_move(move) do
-    with {:ok, _} <- make_move(move) do
-      computer_move(Game.info())
-    end
+    move
+    |> make_move()
+    |> computer_move(Game.info())
   end
 
   defp make_move(:heal), do: {:ok, Actions.move(:heal)}
@@ -27,6 +27,11 @@ defmodule ExMon do
   defp make_move(:punch), do: {:ok, Actions.move(:punch)}
   defp make_move(move), do: {:error, Status.print_wrong_move(move)}
 
-  defp computer_move(%{status: :continue, turn: :computer}), do: make_move(Enum.random(@moves))
-  defp computer_move(_), do: :ok
+  defp computer_move(
+         {:ok, _},
+         %{status: :continue, turn: :computer}
+       ),
+       do: make_move(Enum.random(@moves))
+
+  defp computer_move(_, _), do: :ok
 end
